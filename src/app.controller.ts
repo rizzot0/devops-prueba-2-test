@@ -4,7 +4,6 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
 
@@ -16,7 +15,7 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    return '¡Hola! Esta es mi aplicación web para DevOps - Parte B del ejercicio práctico';
+    return '¡Hola! Esta es mi aplicación web para DevOps';
   }
 
   @Get('users')
@@ -25,7 +24,7 @@ export class AppController {
   }
 
   @Get('users/:id')
-  getUserById(@Param('id', ParseUUIDPipe) id: string) {
+  getUserById(@Param('id') id: string) {
     return this.appService.getUserById(id);
   }
 

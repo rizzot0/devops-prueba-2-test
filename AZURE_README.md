@@ -72,4 +72,4 @@ En Azure App Service → Configuration → Application settings:
 - La aplicación funciona sin base de datos para cumplir los requisitos
 - El tier F1 (Free) de Azure es suficiente
 - No se requiere base de datos ni réplicas
-- El dominio público se genera automáticamente por Azure 
+- El dominio público se genera automáticamente por Azure a
