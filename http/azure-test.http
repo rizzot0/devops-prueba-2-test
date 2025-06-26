@@ -1,0 +1,17 @@
+### Ruta inicial (Parte B)
+GET https://devops-prueba-2-app.azurewebsites.net/
+
+### Obtener todos los usuarios (sin base de datos)
+GET https://devops-prueba-2-app.azurewebsites.net/users
+
+### Obtener usuario por ID
+GET https://devops-prueba-2-app.azurewebsites.net/users/1
+
+### Crear un nuevo usuario
+POST https://devops-prueba-2-app.azurewebsites.net/users
+Content-Type: application/json
+
+{
+  "name": "Nuevo Usuario",
+  "age": 28
+} 

@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # Base de datos MariaDB
+  mariadb:
+    image: mariadb:10.6
+    container_name: devops_mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: devops_db
+      MYSQL_USER: devops_user
+      MYSQL_PASSWORD: devops_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+
+  # phpMyAdmin para visualizar la base de datos
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: devops_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8080:80"
+    depends_on:
+      - mariadb
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.25'
+        reservations:
+          memory: 128M
+          cpus: '0.1'
+
+  # Aplicación NodeJS
+  app:
+    build: .
+    container_name: devops_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_HOST: mariadb
+      DATABASE_PORT: 3306
+      DATABASE_USER: devops_user
+      DATABASE_PASS: devops_password
+      DATABASE_NAME: devops_db
+    depends_on:
+      - mariadb
+    volumes:
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+
+volumes:
+  mariadb_data: 
